@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RAG-AS | </title><meta name="author" content="mcc,mcc@xaufe.edu.cn"><meta name="copyright" content="mcc"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为什么要有RAG评测？随着Spring AI、Langchain、Dify、Agentscope Java等AI框架或者Workflow平台的发展，我们越来越多人投入到了Agent应用开发中，大家可以凭借着AI框架轻松的搭建起一套 文档-&gt;向量库-&gt;相关chunk检索-&gt; AI回答用户问题 的标准RAG流程  上一篇我们讲解了因为需要给AI补齐知识边界（AI的预料知识是过期的，有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAG-AS">
+<meta property="og:url" content="https://chengcc.cn/2026/09/28/RAG-AS/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="为什么要有RAG评测？随着Spring AI、Langchain、Dify、Agentscope Java等AI框架或者Workflow平台的发展，我们越来越多人投入到了Agent应用开发中，大家可以凭借着AI框架轻松的搭建起一套 文档-&gt;向量库-&gt;相关chunk检索-&gt; AI回答用户问题 的标准RAG流程  上一篇我们讲解了因为需要给AI补齐知识边界（AI的预料知识是过期的，有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chengcc.cn/images/1.jpg">
+<meta property="article:published_time" content="2026-09-28T13:54:02.000Z">
+<meta property="article:modified_time" content="2026-09-28T14:25:00.160Z">
+<meta property="article:author" content="mcc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengcc.cn/images/1.jpg"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://chengcc.cn/2026/09/28/RAG-AS/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":null,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RAG-AS',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-28 22:25:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/blue/pace-theme-minimal.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/2.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title=""><span class="site-name"></span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RAG-AS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-28T13:54:02.000Z" title="发表于 2026-09-28 21:54:02">2026-09-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-28T14:25:00.160Z" title="更新于 2026-09-28 22:25:00">2026-09-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="RAG-AS"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="为什么要有RAG评测？"><a href="#为什么要有RAG评测？" class="headerlink" title="为什么要有RAG评测？"></a>为什么要有RAG评测？</h2><p>随着Spring AI、Langchain、Dify、Agentscope Java等AI框架或者Workflow平台的发展，我们越来越多人投入到了Agent应用开发中，大家可以凭借着AI框架轻松的搭建起一套 文档-&gt;向量库-&gt;相关chunk检索-&gt; AI回答用户问题 的标准RAG流程</p>
+<ul>
+<li><p>上一篇我们讲解了因为需要给AI补齐知识边界（AI的预料知识是过期的，有Cutoff截止日期）<br><img src="/images/cutoff-knowledge.png" alt="deepseek.com"></p>
+</li>
+<li><p>其次还有：</p>
+</li>
+</ul>
+<ol>
+<li><p>打破“能用”的幻觉，发现潜在缺陷。在 Demo 阶段，问几个简单问题，模型往往能给出看似不错的答案，让人误以为系统已经“可用”。但一旦进入真实业务场景（如企业知识库、客服问答），问题就会暴露无遗：<br>明明有答案却没找出来（检索漏召回）。<br>找到了答案却还在胡编乱造（生成层幻觉）。<br>回答本身没错，但速度太慢或成本太高（工程性能差）。评测能帮你撕开“能回答”的表象，看到系统在严肃场景下的真实表现。</p>
+</li>
+<li><p>精准定位瓶颈，实现科学优化。RAG 是一个包含“检索”和“生成”的链路系统，错误在流水线中是“乘法关系”而非“加法关系”（例如检索准确率 80% × 生成准确率 80% &#x3D; 端到端准确率仅 64%）。如果不做评测，你只知道系统“答错了”，却不知道错在哪。通过评测，可以将问题拆解并定位到具体环节，从而对症下药：<br>检索层失败：如果评测发现是检索没召回关键证据，或者排序把正确答案压得太靠后，你需要优化的是向量数据库、切分策略或重排序模型。<br>生成层失败：如果检索到了正确文档，但模型依然无视上下文自己瞎编，你需要调整的是提示词约束、降低模型温度或优化引用机制。</p>
+</li>
+<li><p>建立质量闭环，防止版本倒退。成熟的 RAG 开发需要像软件工程一样严谨。评测体系（特别是离线回归测试集）能帮助你建立质量闭环：<br>版本对比：当你更换了嵌入模型或调整了参数，评测能告诉你系统整体是变好了还是变差了。<br>回归测试：确保新的迭代没有把之前已经修复的问题重新引入，防止系统“按下葫芦浮起瓢”</p>
+</li>
+<li><p>规避关键行业的致命风险。在客服闲聊等场景，答错可能只是体验不佳；但在医疗、金融、法律等关键行业，RAG 系统的错误可能带来严重后果：<br>医疗：遗漏关键病症信息或编造药物剂量可能导致误诊。<br>金融&#x2F;法律：引用了过期的旧政策或虚构法律条款，可能引发严重的合规风险与法律纠纷。科学的评估体系是保障这些高风险场景下系统可靠性的“生命线”。</p>
+</li>
+<li><p>平衡质量、成本与用户体验。一个准确但响应极慢、或者单次查询成本极高的系统，在生产环境中是无法落地的。评测不仅关注答案的准确性（如忠实度、相关性），还要关注端到端的工程指标（如 P95 延迟、吞吐量、每千次查询成本），确保系统在保证质量的前提下，具备商业上的可持续性。</p>
+</li>
+</ol>
+<h2 id="怎么做RAG评测？"><a href="#怎么做RAG评测？" class="headerlink" title="怎么做RAG评测？"></a>怎么做RAG评测？</h2><p>回顾我们RAG流程:<br><strong>构建RAG系统涉及四个核心流程：</strong></p>
+<ol>
+<li><strong>数据收集与处理</strong>：将企业内部文档解析并进行智能切块处理。</li>
+<li><strong>向量转换与存储</strong>：使用Embedding模型将文本块转换为向量，并存储至向量数据库中。</li>
+<li><strong>向量检索与召回</strong>：将用户的提问转为向量，并从数据库中检索出最相似的数据块。</li>
+<li><strong>回答增强与生成</strong>：将检索到的数据块内容作为上下文，连同用户问题一起输入LLM，生成最终回答。</li>
+</ol>
+<p>我们需要关注五大核心指标：</p>
+<ul>
+<li><p>在我们检索召回阶段<br>1.精确率(context precision):衡量检索结果的“查准率”。即在系统检索回来的所有文档块中，真正与问题相关的比例是多少。<br>2.召回率 (context recall):衡量检索结果的“查全率”。即在所有与问题相关的文档中，系统成功检索出了多少比例。</p>
+</li>
+<li><p>生成阶段：<br>3.答案相关性(answer relevance)：衡量最终生成的答案是否直接、准确地回答了用户的原始问题。</p>
+</li>
+</ul>
+<p>4.忠诚度(faithfulness):衡量生成的答案是否严格基于检索到的上下文，是否出现了“幻觉”（即编造了上下文中不存在或与上下文矛盾的信息）。</p>
+<p>5.答案正确性(answer correctness):这是衡量最终答案质量的“金标准”，它综合了“事实准确度”和“语义相似度”两个维度。它需要引入人工标注的标准答案（Ground Truth）作为参照，不仅要求生成的答案在语义表达上与标准答案相近（像不像），更要求核心事实（如数据、人名、结论）必须完全一致（对不对）。在主流的评估框架中，事实准确度的权重通常更高，以避免AI用“正确的废话”掩盖事实错误</p>
+<h2 id="评测指标怎么收集？"><a href="#评测指标怎么收集？" class="headerlink" title="评测指标怎么收集？"></a>评测指标怎么收集？</h2><h2 id="RAG系统持续优化"><a href="#RAG系统持续优化" class="headerlink" title="RAG系统持续优化"></a>RAG系统持续优化</h2><p>持续优化看各指标依赖的数据和模型：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>问题</th>
+<th>AI回答</th>
+<th>参考材料</th>
+<th>标准答案</th>
+<th>LLM</th>
+<th>Embedding</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Context Precision（上下文准确率）</td>
+<td>✅</td>
+<td></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Context Recall（上下文召回率）</td>
+<td>✅</td>
+<td></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Answer Relevancy（答案相关性）</td>
+<td>✅</td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Faithfulness（忠诚度）</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td></td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Answer Correctness（答案准确性）</td>
+<td>✅</td>
+<td>✅</td>
+<td></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://chengcc.cn">mcc</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://chengcc.cn/2026/09/28/RAG-AS/">https://chengcc.cn/2026/09/28/RAG-AS/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chengcc.cn" target="_blank"></a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/images/1.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2026/05/07/LLM%E7%9A%84%E7%9F%A5%E8%AF%86%E4%B8%8E%E8%83%BD%E5%8A%9B%E8%BE%B9%E7%95%8C/" title="LLM的知识与能力边界"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">LLM的知识与能力边界</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">mcc</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="/images/qq_number.jpg"><i class="fa fa-user-circle-o"></i><span>QQ</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/1chengm" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:mcc@xaufe.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89RAG%E8%AF%84%E6%B5%8B%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么要有RAG评测？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%81%9ARAG%E8%AF%84%E6%B5%8B%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">怎么做RAG评测？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E6%B5%8B%E6%8C%87%E6%A0%87%E6%80%8E%E4%B9%88%E6%94%B6%E9%9B%86%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">评测指标怎么收集？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAG%E7%B3%BB%E7%BB%9F%E6%8C%81%E7%BB%AD%E4%BC%98%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">RAG系统持续优化</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/28/RAG-AS/" title="RAG-AS">RAG-AS</a><time datetime="2026-09-28T13:54:02.000Z" title="发表于 2026-09-28 21:54:02">2026-09-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/07/LLM%E7%9A%84%E7%9F%A5%E8%AF%86%E4%B8%8E%E8%83%BD%E5%8A%9B%E8%BE%B9%E7%95%8C/" title="LLM的知识与能力边界">LLM的知识与能力边界</a><time datetime="2026-05-07T08:11:08.000Z" title="发表于 2026-05-07 16:11:08">2026-05-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8Esocket/" title="多线程与socket">多线程与socket</a><time datetime="2025-09-22T09:16:30.000Z" title="发表于 2025-09-22 17:16:30">2025-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/18/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a><time datetime="2025-07-18T08:49:31.000Z" title="发表于 2025-07-18 16:49:31">2025-07-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/23/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/" title="匈牙利算法">匈牙利算法</a><time datetime="2025-03-23T13:12:20.000Z" title="发表于 2025-03-23 21:12:20">2025-03-23</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/2.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By mcc</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="12490706495" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false" data-theme="#2980b9" data-mutex="true"></div><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
